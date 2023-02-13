@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def matrix_transpose(matrix):
     if type(matrix[0])!= list:
         return "given matrix is not 2D"
