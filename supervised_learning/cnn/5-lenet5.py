@@ -8,12 +8,12 @@ import tensorflow.keras as K
 
 
 def lenet5(X):
+
     init = K.initializers.he_normal(seed=None)
-  
     """Beginning convolutional layer(s)"""
     conv1 = K.layers.Conv2D(filters=6, kernel_size=(5, 5), padding='same',
                             activation='relu',
-                            kernel_initializer=init)(X)
+                            kernel_initializer='he_normal')(X)
 
     # pooling Layer 1
     pool1 = K.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(conv1)
@@ -38,7 +38,7 @@ def lenet5(X):
                          kernel_initializer='he_normal')(fc1)
 
     # setting output layer
-    output = K.layers.Dense(units=10, activation='softmax')(fc2)
+    output = K.layers.Dense(units=10, activation='softmax', kernel_initializer='he_normal's)(fc2)
 
     model = K.models.Model(inputs=X, outputs=output)
 
