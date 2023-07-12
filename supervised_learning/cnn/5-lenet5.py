@@ -8,8 +8,6 @@ import tensorflow.keras as K
 
 
 def lenet5(X):
-
-    init = K.initializers.he_normal(seed=None)
     """Beginning convolutional layer(s)"""
     conv1 = K.layers.Conv2D(filters=6, kernel_size=(5, 5), padding='same',
                             activation='relu',
@@ -38,8 +36,7 @@ def lenet5(X):
                          kernel_initializer='he_normal')(fc1)
 
     # setting output layer
-    output = K.layers.Dense(units=10, kernel_initializer='he_normal' , activation='softmax')(fc2)
-    # y_pred = K.layers.Activation('softmax')(output)
+    output = K.layers.Dense(units=10, kernel_initializer='he_normal', activation='softmax')(fc2)
 
     model = K.models.Model(inputs=X, outputs=output)
 
