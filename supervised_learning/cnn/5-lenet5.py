@@ -41,7 +41,7 @@ def lenet5(X):
     output = K.layers.Dense(units=10, kernel_initializer='he_normal')(fc2)
     y_pred = K.layers.Activation('softmax')(output)
 
-    model = K.models.Model(inputs=X, outputs=output)
+    model = K.models.Model(inputs=X, outputs=y_pred)
 
     """compiling the model"""
     model.compile(optimizer='adam', loss='categorical_crossentropy',
