@@ -38,7 +38,7 @@ def lenet5(X):
                          kernel_initializer='he_normal')(fc1)
 
     # setting output layer
-    output = K.layers.Dense(units=10, activation='softmax', kernel_initializer='he_normal's)(fc2)
+    output = K.layers.Dense(units=10, activation='softmax', kernel_initializer='he_normal')(fc2)
 
     model = K.models.Model(inputs=X, outputs=output)
 
