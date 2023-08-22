@@ -45,7 +45,7 @@ class Yolo:
             input_width = self.model.input.shape[1].value
             input_height = self.model.input.shape[2].value
             
-            # Box coordinates adjustment
+            # Box coordinates adjustment (output[..., 0:1] is the same as output[..., 0], and output[..., 0] is simpler to read)
             box_tx = output[..., 0]
             box_ty = output[..., 1]
             box_tw = output[..., 2]
@@ -55,13 +55,16 @@ class Yolo:
             box_tx_sigmoid = self.sigmoid(box_tx)
             box_ty_sigmoid = self.sigmoid(box_ty)
             
-            # Create a grid of same shape as the predictions
+            # Create a grid of same shape as the predictions (the previous code was very hard to read and I wasn't sure whether it produced the correct result - I rewrote it)
             grid_x = np.arange(grid_width).reshape(1, grid_width, 1)
             grid_y = np.arange(grid_height).reshape(1, grid_height, 1)
-            
+
+            # x,y coordinates of the boxes need to be divided by the width and height of the grid
             box_x = (box_tx_sigmoid + grid_x)/grid_width
             box_y = (box_ty_sigmoid + grid_y)/grid_height
-            
+
+            # width and height of the boxes need to be divided by the input width and height (not the grid's height and width!)
+            # self.anchors[:, 0] ti self.anchors[i, :, 0] as you need to multiply the output with it's respective bounding box and not the whole array
             box_w = (self.anchors[i, :, 0] * np.exp(box_tw))/input_width
             box_h = (self.anchors[i, :, 1] * np.exp(box_th))/input_height
             
