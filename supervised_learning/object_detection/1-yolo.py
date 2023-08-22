@@ -72,7 +72,7 @@ class Yolo:
             y2 = (box_y + box_h / 2) * image_size[0]
 
             # # Box confidences and class probabilities
-            # boxes.append(np.stack([x1, y1, x2, y2], axis=-1))
+            boxes.append(np.stack([x1, y1, x2, y2], axis=-1))
             box_conf = self.sigmoid(output[..., 4:5])
             box_confidences.append(box_conf)
             box_class_prob = self.sigmoid(output[..., 5:])
