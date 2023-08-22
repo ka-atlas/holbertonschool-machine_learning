@@ -45,32 +45,32 @@ class Yolo:
             # input_width = self.model.input.shape[1].value
             # input_height = self.model.input.shape[2].value
             
-            # Box coordinates adjustment
-            box_tx = output[..., 0]
-            box_ty = output[..., 1]
-            box_tw = output[..., 2]
-            box_th = output[..., 3]
-            # Using sigmoid function
-            box_tx_sigmoid = self.sigmoid(box_tx)
-            box_ty_sigmoid = self.sigmoid(box_ty)
-            # Create a grid of same shape as the predictions
-            grid_x = np.arange(grid_width).reshape(1, grid_width, 1)
-            grid_y = np.arange(grid_height).reshape(1, grid_height, 1)
+            # # Box coordinates adjustment
+            # box_tx = output[..., 0]
+            # box_ty = output[..., 1]
+            # box_tw = output[..., 2]
+            # box_th = output[..., 3]
+            # # Using sigmoid function
+            # box_tx_sigmoid = self.sigmoid(box_tx)
+            # box_ty_sigmoid = self.sigmoid(box_ty)
+            # # Create a grid of same shape as the predictions
+            # grid_x = np.arange(grid_width).reshape(1, grid_width, 1)
+            # grid_y = np.arange(grid_height).reshape(1, grid_height, 1)
             
-            box_x = (box_tx_sigmoid + grid_x)/grid_width
-            box_y = (box_ty_sigmoid + grid_y)/grid_height
+            # box_x = (box_tx_sigmoid + grid_x)/grid_width
+            # box_y = (box_ty_sigmoid + grid_y)/grid_height
             
-            box_w = ((np.exp(box_tw) * self.anchors[i, :, 0]))#/input_width
-            box_h = (np.exp(box_th) * self.anchors[i, :, 1]))#/input_height
+            # box_w = ((np.exp(box_tw) * self.anchors[i, :, 0]))#/input_width
+            # box_h = (np.exp(box_th) * self.anchors[i, :, 1]))#/input_height
             
-            # Convert coordinates relative to the size of the image
-            x1 = (box_x - box_w / 2) * image_size[1]
-            y1 = (box_y - box_h / 2) * image_size[0]
-            x2 = (box_x + box_w / 2) * image_size[1]
-            y2 = (box_y + box_h / 2) * image_size[0]
+            # # Convert coordinates relative to the size of the image
+            # x1 = (box_x - box_w / 2) * image_size[1]
+            # y1 = (box_y - box_h / 2) * image_size[0]
+            # x2 = (box_x + box_w / 2) * image_size[1]
+            # y2 = (box_y + box_h / 2) * image_size[0]
 
-            # Box confidences and class probabilities
-            boxes.append(np.stack([x1, y1, x2, y2], axis=-1))
+            # # Box confidences and class probabilities
+            # boxes.append(np.stack([x1, y1, x2, y2], axis=-1))
             box_conf = self.sigmoid(output[..., 4:5])
             box_confidences.append(box_conf)
             box_class_prob = self.sigmoid(output[..., 5:])
