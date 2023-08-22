@@ -42,14 +42,14 @@ class Yolo:
         for i, output in enumerate(outputs):
             grid_height, grid_width, anchor_boxes, _ = output.shape
 
-            # input_width = self.model.input.shape[1].value
-            # input_height = self.model.input.shape[2].value
+            input_width = self.model.input.shape[1].value
+            input_height = self.model.input.shape[2].value
             
-            # # Box coordinates adjustment
-            # box_tx = output[..., 0]
-            # box_ty = output[..., 1]
-            # box_tw = output[..., 2]
-            # box_th = output[..., 3]
+            # Box coordinates adjustment
+            box_tx = output[..., 0]
+            box_ty = output[..., 1]
+            box_tw = output[..., 2]
+            box_th = output[..., 3]
             # # Using sigmoid function
             # box_tx_sigmoid = self.sigmoid(box_tx)
             # box_ty_sigmoid = self.sigmoid(box_ty)
