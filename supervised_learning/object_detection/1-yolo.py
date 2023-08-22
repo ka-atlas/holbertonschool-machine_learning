@@ -42,8 +42,8 @@ class Yolo:
         for i, output in enumerate(outputs):
             grid_height, grid_width, anchor_boxes, _ = output.shape
 
-            input_width = self.model.input.shape[1].value
-            input_height = self.model.input.shape[2].value
+            # input_width = self.model.input.shape[1].value
+            # input_height = self.model.input.shape[2].value
             
             # Box coordinates adjustment
             box_tx = output[..., 0]
@@ -60,8 +60,8 @@ class Yolo:
             box_x = (box_tx_sigmoid + grid_x)/grid_width
             box_y = (box_ty_sigmoid + grid_y)/grid_height
             
-            box_w = ((np.exp(box_tw) * self.anchors[i, :, 0]))/input_width
-            box_h = (np.exp(box_th) * self.anchors[i, :, 1]))/input_height
+            box_w = ((np.exp(box_tw) * self.anchors[i, :, 0]))#/input_width
+            box_h = (np.exp(box_th) * self.anchors[i, :, 1]))#/input_height
             
             # Convert coordinates relative to the size of the image
             x1 = (box_x - box_w / 2) * image_size[1]
