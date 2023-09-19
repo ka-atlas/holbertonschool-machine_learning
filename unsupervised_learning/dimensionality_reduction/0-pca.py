@@ -25,7 +25,7 @@ def pca(X, var=0.95):
     cumivar = np.cumsum(varratio)
     keep = np.argmax(cumivar >= var) + 1
 
-    #most important features
+    #most  features
     mostimp = evect[:, :keep]
     #weights mat
 
