@@ -26,7 +26,7 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     results = []
     d_vars = []
 
-    k = 1
+    k = kmin
     C, clss = kmeans(X, k, iterations)
     var = variance(X, C)
     results.append((C, clss))
