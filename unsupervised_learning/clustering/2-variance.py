@@ -17,7 +17,7 @@ def variance(X, C):
         return None
 
     try:
-        distances = np.sum((X[:, np.newaxis] - C) ** 2, axis=2)
+        distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
     
         nearest_centroid_indices = np.argmin(distances, axis=1)
     
