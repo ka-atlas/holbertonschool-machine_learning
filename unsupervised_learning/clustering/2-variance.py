@@ -16,13 +16,10 @@ def variance(X, C):
     if X.shape[1] != C.shape[1]:
         return None
 
-    try:
-        distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
-    
-        nearest_centroid_indices = np.argmin(distances, axis=1)
-    
-        var = np.sum(distances[np.arange(len(X)), nearest_centroid_indices])
+    distances = np.sum((X[:, np.newaxis] - C) ** 2, axis=2)
 
-        return var
-    except:
-        return None
+    nearest_centroid_indices = np.argmin(distances, axis=1)
+
+    var = np.sum(distances[np.arange(len(X)), nearest_centroid_indices])
+
+    return var
