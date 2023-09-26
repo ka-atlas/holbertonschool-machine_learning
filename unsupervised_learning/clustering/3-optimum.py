@@ -35,6 +35,9 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     for k in range(kmin+1, kmax + 1):
         C, clss = kmeans(X, k, iterations)
         results.append((C, clss))
-        d_vars.append(abs(var - variance(X, C)))
+        try:
+            d_vars.append(abs(var - variance(X, C)))
+        except:
+            d_vars.append(0.0)
 
     return results, d_vars
