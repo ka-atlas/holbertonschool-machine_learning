@@ -1,47 +1,35 @@
 #!/usr/bin/env python3
-"""Task 1"""
+"""Dimensionality Reduction:
+   Applying PCA on dataset."""
+
+
 import numpy as np
 
+
 def pca(X, var=0.95):
-    ''' performs PCA on dataset'''
-    n, d = X.shape
+    """PCA performance on a dataset using Numpy.
+       Returns: the weights matrix 'W'
+       which maintains the specified fraction
+       of the OG variance."""
+    cov_matrix = np.cov(X, rowvar=False)
 
-    #conv. mat to covar mat
-    covarmat = cov(X)
-    #compute evalsk and evectss
+    # Perform eigenvalue decomposition on the covariance matrix
+    eigvals, eigvecs = np.linalg.eig(cov_matrix)
 
-    evall, evect = np.linalg.eigh(covarmat)
-    #sort them in desc order
+    # Sort eigenvalues and eigenvectors in descending order
+    sorted_indices = np.argsort(eigvals)[::-1]
+    eigvals = eigvals[sorted_indices]
+    eigvecs = eigvecs[:, sorted_indices]
 
-    indicessorted = np.argsort(evall)[ : :-1]
-    evalls = evalls[indicessorted]
-    evect = evect[:, indicessorted]
+    # Determine target variance:
+    total_variance = np.sum(eigvals)
+    target_variance = var * total_variance
 
-    #calc explained var
-    vari = np.sum(evalls)
-    varratio = evalls / vari
+    # Find min num of dimensions
+    cumulative_variance = np.cumsum(eigvals)
+    num_dimensions = np.argmax(cumulative_variance >= target_variance) + 1
 
-    #determine which to keep
-    cumivar = np.cumsum(varratio)
-    keep = np.argmax(cumivar >= var) + 1
+    # Extract principle components
+    X = eigvecs[:, :num_dimensions]
 
-    #most  features
-    mostimp = evect[:, :keep]
-    #weights mat
-
-    W = mostimp
-    return W
-
-
-def cov(x):
-    '''covariance helper func'''
-    n, d = x.shape
-    mean = np.mean(x, axis=0)  # Calculate the mean along each dimension
-
-    # Subtract the mean from each data point
-    centered_data = x - mean
-
-    # Compute the covariance matrix
-    cov_matrix = np.dot(centered_data.T, centered_data) / (n - 1)
-
-    return cov_matrix
+    return X
