@@ -30,6 +30,6 @@ def pca(X, var=0.95):
     num_dimensions = np.argmax(cumulative_variance >= target_variance) + 1
 
     # Extract principle components
-    X = eigvecs[:, :num_dimensions]
+    X = eigvecs[:, :num_dimensions+1]
 
     return X
